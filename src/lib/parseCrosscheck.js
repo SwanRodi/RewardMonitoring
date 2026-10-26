@@ -39,7 +39,7 @@ export function parseCrosscheck(data) {
   const head = grid[hIdx].map(norm)
   const col = (...labels) => head.findIndex((h) => labels.some((l) => h === l || h.startsWith(l)))
   const C = {
-    no: col('NO.'), code: col('NOMOR PELANGGAN'), name: col('NAMA PELANGGAN'), address: col('ALAMAT PELANGGAN'),
+    code: col('NOMOR PELANGGAN'), name: col('NAMA PELANGGAN'), address: col('ALAMAT PELANGGAN'),
     salesCode: col('KODE SALES'), salesName: col('NAMA SALES'), mdCode: col('KODE MD'), mdName: col('NAMA MD'),
     rayon: col('RAYON MD'), type: col('TYPE DISPLAY'), reward: col('REWARD DISPLAY'), paid: col('PAID ?'),
     paidAmt: col('JUMLAH PAID'), unpaidAmt: col('+/- PAID'), order: col('ORDER NUMBER'),
@@ -73,7 +73,7 @@ export function parseCrosscheck(data) {
     if (!code || !/^\d{4}-\d{3,}$/.test(code)) continue
     const isPaid = norm(r[C.paid]) === 'Y'
     rows.push({
-      row_no: num(r[C.no]) || rows.length + 1, customer_code: code, customer_name: text(r[C.name]), address: text(r[C.address]),
+      row_no: rows.length + 1, customer_code: code, customer_name: text(r[C.name]), address: text(r[C.address]),
       sales_code: text(r[C.salesCode]), sales_name: text(r[C.salesName]), md_code: text(r[C.mdCode]), md_name: text(r[C.mdName]),
       rayon_md: text(r[C.rayon]), display_type: text(r[C.type]), reward_amount: num(r[C.reward]), is_paid: isPaid,
       paid_amount: num(r[C.paidAmt]), unpaid_amount: num(r[C.unpaidAmt]),
